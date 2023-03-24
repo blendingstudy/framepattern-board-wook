@@ -45,28 +45,28 @@ public class CommentService {
     /*
         bean 대신에 Map 으로 파라미터 전달하는 샘플
      */
-    // @Transactional(readOnly = true) // 트랜젝션을 읽기 전용 모드로 설정
-    // public PostPage getPage(PageRequest pageRequest) {
-        // int totalCount = sqlSession.selectOne("board.totalCount");
+    @Transactional(readOnly = true) // 트랜젝션을 읽기 전용 모드로 설정
+    public PostPage getPage(PageRequest pageRequest) {
+        int totalCount = sqlSession.selectOne("board.totalCount");
 
-        // Map<String, Object> params = new HashMap<>();
-        // params.put("offset", pageRequest.getOffset());
-        // params.put("pageSize", pageRequest.getPageSize());
+        Map<String, Object> params = new HashMap<>();
+        params.put("offset", pageRequest.getOffset());
+        params.put("pageSize", pageRequest.getPageSize());
 
-        // List<Post> posts = sqlSession.selectList("board.posts", params);
+        List<Post> posts = sqlSession.selectList("board.posts", params);
 
-        // PostPage page = new PostPage();
-        // page.setPageSize(pageRequest.getPageSize());
-        // page.setPageNo(pageRequest.getPageNo());
-        // page.setTotalCount(totalCount);
-        // page.setPosts(posts);
+        PostPage page = new PostPage();
+        page.setPageSize(pageRequest.getPageSize());
+        page.setPageNo(pageRequest.getPageNo());
+        page.setTotalCount(totalCount);
+        page.setPosts(posts);
 
-    //     return page;
-    // }
-
-    public PostComment findById(long id) {
-        return sqlSession.selectOne("comment.postComment", id);
+        return page;
     }
+
+    // public PostComment findById(long id) {
+    //     return sqlSession.selectOne("comment.postComment", id);
+    // }
 
     public void deleteById(long id) {
         sqlSession.delete("comment.delete", id);
