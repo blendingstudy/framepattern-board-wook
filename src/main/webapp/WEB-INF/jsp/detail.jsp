@@ -30,7 +30,23 @@
                             작성글이 존재하지 않습니다.
                         </c:otherwise>
                     </c:choose>
-                    </div>
+                </div>
+                <div class="card" >
+                    <form:form method="postComment" action="/saveComment" modelAttribute="postComment" >
+                        <div class="col-12">
+                            <input type="text" style="width:90%">
+                            <button type="submit" class="btn btn-primary">댓글등록</button>
+                        </div>
+                    </form:form>
+                    <c:forEach items="${page.comments}" var="postComment">
+                        <span>
+                            <p scope="row">${postComment.id}</p>
+                            <p>${postComment.userName}</a></p>
+                            <p>${postComment.content}</a></p>
+                            <p><fmt:formatDate value="${postComment.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
+                            <a href="/delete/comment/${postComment.id}" class="card-link">삭제</a>
+                        </span>
+                    </c:forEach>
                 </div>
             </div>
         </div>
