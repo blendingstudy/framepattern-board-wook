@@ -14,9 +14,14 @@
                     <div class="card-body">
                     <c:choose>
                         <c:when test="${post != null}">
-                            <h5 class="card-title">${post.title}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted"><fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/></h6>
-                            <p class="card-text mt-3">${post.content}</p>
+                            <h5 class="card-title">userName : ${post.userName}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">createdAt : <fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/></h6>
+                            <p class="card-text mt-3">birthday : ${post.birthday}</p>
+                            <p class="card-text mt-3">phoneNumber : ${post.phoneNumber}</p>
+                            <p class="card-text mt-3">walletAddress : ${post.walletAddress}</p>
+                            <p class="card-text mt-3">balance : ${post.balance}</p>
+                            <p class="card-text mt-3">bank : ${post.bank}</p>
+                            <p class="card-text mt-3">accountNumber : ${post.accountNumber}</p>
                             <a href="/form/${post.id}" class="card-link">수정</a>
                             <a href="/delete/${post.id}" class="card-link">삭제</a>
                             <a href="/" class="card-link">목록</a>

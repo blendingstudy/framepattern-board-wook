@@ -4,28 +4,56 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
     <insert id="insert" parameterType="Post">
-        insert into board ( title, content )
-        values ( #{title}, #{content} )
+        INSERT INTO user (
+            user_name
+            , birthday
+            , phone_number
+            , wallet_address
+            , balance
+            , bank
+            , account_number
+        )VALUES(
+            #{userName}
+            , #{birthday}
+            , #{phoneNumber}
+            , #{walletAddress}
+            , #{balance}
+            , #{bank}
+            , #{accountNumber}
+        );
     </insert>
     <update id="update" parameterType="Post">
-        update board set title = #{title}, content = #{content} where id = #{id}
+        UPDATE  user
+        SET     user_name = #{userName}
+                , birthday = #{birthday}
+                , phone_number = #{phoneNumber}
+                , wallet_address = #{walletAddress}
+                , balance = #{balance}
+                , bank = #{bank}
+                , account_number = #{accountNumber}
+        WHERE   id = #{id}
     </update>
     <delete id="delete" parameterType="long">
-        delete from board where id = #{id}
+        DELETE FROM user WHERE id = #{id}
     </delete>
     <select id="totalCount" resultType="int">
-        select count(id) from board
+        SELECT COUNT(id) FROM user
     </select>
     <select id="posts" parameterType="map" resultType="Post">
-        select
-            id,
-            title,
-            content,
-            created_at
-        from board
-        order by created_at desc limit #{offset}, #{pageSize}
+        SELECT id
+            , user_name
+            , birthday
+            , phone_number
+            , wallet_address
+            , balance
+            , bank
+            , account_number
+            , created_at
+        FROM user
+        ORDER BY created_at DESC 
+        LIMIT #{offset}, #{pageSize}
     </select>
     <select id="post" parameterType="long" resultType="Post">
-        select * from board where id = #{id}
+        SELECT * FROM user WHERE id = #{id}
     </select>
 </mapper>

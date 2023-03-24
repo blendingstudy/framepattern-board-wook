@@ -10,22 +10,26 @@
     <div class="container">
         <div class="row">
             <div class="col-12 my-3">
-                <a href="/form" class="btn btn-primary">글 작성</a>
+                <a href="/form" class="btn btn-primary">사용자 추가</a>
             </div>
             <div class="col-12">
                 <table class="table table-hover">
                     <thead>
                     <tr>
                         <th scope="col" width="15%">#</th>
-                        <th scope="col" width="60%">제목</th>
-                        <th scope="col" width="25%">작성일자</th>
+                        <th scope="col" width="20%">이름</th>
+                        <th scope="col" width="20%">생년월일</th>
+                        <th scope="col" width="20%">잔액</th>
+                        <th scope="col" width="25%">등록일자</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${page.posts}" var="post">
                         <tr>
                             <th scope="row">${post.id}</th>
-                            <td><a href="/read/${post.id}">${post.title}</a></td>
+                            <td><a href="/read/${post.id}">${post.userName}</a></td>
+                            <td><a href="/read/${post.id}">${post.birthday}</a></td>
+                            <td><a href="/read/${post.id}">${post.balance}</a></td>
                             <td><fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                         </tr>
                     </c:forEach>
