@@ -22,12 +22,12 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
-    // @GetMapping("")
-    // public String list(PageRequest pageRequest, Model model) {
-        // PostPage page = boardService.getPage(pageRequest);
-        // model.addAttribute("page", page);
-        // return "list"; // WEB-INF/list.jsp 템플릿 호출
-    // }
+    @GetMapping("/listComment")
+    public String list(PageRequest pageRequest, Model model) {
+        PostPage page = commentService.getPage(pageRequest);
+        model.addAttribute("page", page);
+        return "list"; // WEB-INF/list.jsp 템플릿 호출
+    }
 
     // @GetMapping("/read/{id:\\d+}")
     // public String read(@PathVariable long id, Model model) {
@@ -36,10 +36,10 @@ public class CommentController {
         // return "detail";
     // }
 
-    @GetMapping("/delete/comment/{id:\\d+}")
-    public String delete(@PathVariable long id) {
-        commentService.deleteById(id);
-        return "redirect:/";
+    @GetMapping("/delete/comment/{postId:\\d+}&{commentId:\\d+}")
+    public String delete(@PathVariable long postId, @PathVariable long commentId) {
+        commentService.deleteById(commentId);
+        return "redirect:/read/{postId}";
     }
 
     // @GetMapping({"/form", "/form/{id:\\d+}"})
@@ -61,12 +61,9 @@ public class CommentController {
      * @param result 검증 오류가 발생할 경우 오류 내용을 보관
      * @return
      */
-    @PostMapping("/saveComment")
+    @PostMapping("/saveComment/{userId:\\d+}")
     public String save(@Valid PostComment postComment, BindingResult result) {
-        // if (result.hasErrors()) { // 검증 오류 발생
-        //     return "detail";
-        // }
         commentService.save(postComment);
-        return "redirect:/";
+        return "redirect:/read/{userId}";
     }
 }

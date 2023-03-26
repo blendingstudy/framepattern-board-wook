@@ -31,22 +31,35 @@
                         </c:otherwise>
                     </c:choose>
                 </div>
-                <div class="card" >
-                    <form:form method="postComment" action="/saveComment" modelAttribute="postComment" >
-                        <div class="col-12">
-                            <input type="text" style="width:90%">
-                            <button type="submit" class="btn btn-primary">댓글등록</button>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post" action="/saveComment/${post.id}" modelAttribute="postComment" >
+                                <input type="hidden" name="id"/>
+                                <input name="comment" style="width:90%"/>
+                                <button type="submit" class="btn btn-primary">댓글등록</button>
+                            </form>
+                            <table class="table table-hover">
+                                <tbody>
+                                    <c:forEach items="${page.postsComment}" var="comment">
+                                        <tr>
+                                            <td style="width:70%">
+                                                ${comment.comment}
+                                            </td>
+                                            <td style="width:20%">
+                                                <fmt:formatDate value="${comment.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                            </td>
+                                            <td style="width:10%">
+                                                <a href="/delete/comment/${post.id}&${comment.id}" class="card-link">삭제</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
                         </div>
-                    </form:form>
-                    <c:forEach items="${page.comments}" var="postComment">
-                        <span>
-                            <p scope="row">${postComment.id}</p>
-                            <p>${postComment.userName}</a></p>
-                            <p>${postComment.content}</a></p>
-                            <p><fmt:formatDate value="${postComment.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
-                            <a href="/delete/comment/${postComment.id}" class="card-link">삭제</a>
-                        </span>
-                    </c:forEach>
+                    </div>
                 </div>
             </div>
         </div>

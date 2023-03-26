@@ -3,7 +3,10 @@ package com.example.board.controller;
 import com.example.board.controller.dto.PageRequest;
 import com.example.board.controller.dto.PostPage;
 import com.example.board.model.Post;
+import com.example.board.model.PostComment;
 import com.example.board.service.BoardService;
+import com.example.board.service.CommentService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +24,8 @@ import javax.validation.Valid;
 public class BoardController {
     @Autowired
     BoardService boardService;
+    @Autowired
+    CommentService commentService;
 
     @GetMapping("")
     public String list(PageRequest pageRequest, Model model) {
@@ -30,9 +35,11 @@ public class BoardController {
     }
 
     @GetMapping("/read/{id:\\d+}")
-    public String read(@PathVariable long id, Model model) {
+    public String read(PageRequest pageRequest, @PathVariable long id, Model model) {
         Post post = boardService.findById(id);
+        PostPage page = commentService.getPage(pageRequest);
         model.addAttribute("post", post);
+        model.addAttribute("page", page);
         return "detail";
     }
 
@@ -45,6 +52,7 @@ public class BoardController {
     @GetMapping({"/form", "/form/{id:\\d+}"})
     public String form(@PathVariable(required = false) Long id, Model model) {
         Post post = null;
+        PostComment postComment = null;
         if (id != null) { // 수정이라면 게시글 조회
             post = boardService.findById(id);
         }
@@ -52,6 +60,7 @@ public class BoardController {
             post = new Post();
         }
         model.addAttribute("post", post);
+        model.addAttribute("postComment", postComment);
         return "form";
     }
 
