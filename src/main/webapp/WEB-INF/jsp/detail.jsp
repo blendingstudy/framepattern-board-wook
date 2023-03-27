@@ -12,6 +12,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                    <h5 style="background-color:darksalmon">사용자정보</h5>
                     <c:choose>
                         <c:when test="${post != null}">
                             <h5 class="card-title">userName : ${post.userName}</h5>
@@ -36,6 +37,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
+                            <h5 style="background-color:darksalmon">댓글기능</h5>
                             <form method="post" action="/saveComment/${post.id}" modelAttribute="postComment" >
                                 <input name="comment" style="width:90%"/>
                                 <button type="submit" class="btn btn-primary">댓글등록</button>
@@ -57,6 +59,21 @@
                                     </c:forEach>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 style="background-color:darksalmon">파일 업로드</h5>
+                            <form action="/upload/${post.id}" method="post" enctype="multipart/form-data">
+                                <fieldset>
+                                   <p>파일명 : <input type="file" name="file"></p>
+                                   <p><input type="submit" value="upload"></p>	 	
+                                </fieldset>
+                            </form>
                         </div>
                     </div>
                 </div>
