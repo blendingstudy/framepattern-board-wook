@@ -17,12 +17,13 @@
         DELETE FROM comment WHERE id = #{id}
     </delete>
     
-    <select id="postsComment" parameterType="map" resultType="PostComment">
+    <select id="postsComment" parameterType="long" resultType="PostComment">
         SELECT id
             , user_id
             , comment
             , created_at
         FROM comment
+        WHERE user_id = #{id}
         ORDER BY created_at DESC 
     </select>
     

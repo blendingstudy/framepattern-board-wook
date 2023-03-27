@@ -37,7 +37,6 @@
                     <div class="card">
                         <div class="card-body">
                             <form method="post" action="/saveComment/${post.id}" modelAttribute="postComment" >
-                                <input type="hidden" name="id"/>
                                 <input name="comment" style="width:90%"/>
                                 <button type="submit" class="btn btn-primary">댓글등록</button>
                             </form>

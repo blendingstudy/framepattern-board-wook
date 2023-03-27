@@ -37,7 +37,7 @@ public class BoardController {
     @GetMapping("/read/{id:\\d+}")
     public String read(PageRequest pageRequest, @PathVariable long id, Model model) {
         Post post = boardService.findById(id);
-        PostPage page = commentService.getPage(pageRequest);
+        PostPage page = commentService.getPage(pageRequest, id);
         model.addAttribute("post", post);
         model.addAttribute("page", page);
         return "detail";
