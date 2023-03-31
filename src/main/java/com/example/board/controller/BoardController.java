@@ -6,6 +6,7 @@ import com.example.board.model.Post;
 import com.example.board.model.PostComment;
 import com.example.board.service.BoardService;
 import com.example.board.service.CommentService;
+import com.example.board.service.FileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,8 @@ public class BoardController {
     BoardService boardService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    FileService fileService;
 
     @GetMapping("")
     public String list(PageRequest pageRequest, Model model) {
@@ -37,9 +40,11 @@ public class BoardController {
     @GetMapping("/read/{id:\\d+}")
     public String read(PageRequest pageRequest, @PathVariable long id, Model model) {
         Post post = boardService.findById(id);
-        PostPage page = commentService.getPage(pageRequest, id);
+        PostPage comment = commentService.getPage(pageRequest, id);
+        PostPage file = fileService.getPage(pageRequest, id);
         model.addAttribute("post", post);
-        model.addAttribute("page", page);
+        model.addAttribute("comment", comment);
+        model.addAttribute("file", file);
         return "detail";
     }
 

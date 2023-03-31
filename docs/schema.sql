@@ -46,7 +46,7 @@ CREATE TABLE `file` (
   `file_original_name` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL,
   `file_save_name` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL,
   `extention` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `size` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `size` int NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;

@@ -44,7 +44,7 @@
                             </form>
                             <table class="table table-hover">
                                 <tbody>
-                                    <c:forEach items="${page.postsComment}" var="comment">
+                                    <c:forEach items="${comment.postsComment}" var="comment">
                                         <tr>
                                             <td style="width:70%">
                                                 ${comment.comment}
@@ -70,10 +70,63 @@
                             <h5 style="background-color:darksalmon">파일 업로드</h5>
                             <form action="/upload/${post.id}" method="post" enctype="multipart/form-data">
                                 <fieldset>
-                                   <p>파일명 : <input type="file" name="file"></p>
-                                   <p><input type="submit" value="upload"></p>	 	
+                                    <p>파일명 : <input type="file" name="file"></p>
+                                    <p><input type="submit" value="upload"></p>	 	
                                 </fieldset>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 style="background-color:darksalmon">파일업로드 목록</h5>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" width="2%">#</th>
+                                        <th scope="col" width="15%">원본파일명</th>
+                                        <th scope="col" width="15%">저장파일명</th>
+                                        <th scope="col" width="30%">저장경로</th>
+                                        <th scope="col" width="5%">확장자</th>
+                                        <th scope="col" width="10%">등록일자</th>
+                                        <th scope="col" width="8%">다운로드</th>
+                                        <th scope="col" width="5%">삭제</th>
+                                    </tr>
+                                    </thead>
+                                <tbody>
+                                    <c:forEach items="${file.postsFile}" var="file">
+                                        <tr>
+                                            <td>
+                                                ${file.id}
+                                            </td>
+                                            <td>
+                                                ${file.fileOriginalName}
+                                            </td>
+                                            <td>
+                                                ${file.fileSaveName}
+                                            </td>
+                                            <td>
+                                                ${file.filePath}
+                                            </td>
+                                            <td>
+                                                ${file.extention}
+                                            </td>
+                                            <td>
+                                                <fmt:formatDate value="${file.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                            </td>
+                                            <td>
+                                                <a href="/download/file/${post.id}&${file.id}" class="card-link">다운로드</a>
+                                            </td>
+                                            <td>
+                                                <a href="/delete/file/${post.id}&${file.id}" class="card-link">삭제</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

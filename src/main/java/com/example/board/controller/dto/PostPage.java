@@ -2,6 +2,7 @@ package com.example.board.controller.dto;
 
 import com.example.board.model.Post;
 import com.example.board.model.PostComment;
+import com.example.board.model.PostFile;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class PostPage {
     private int totalCount;
     private List<Post> posts;
     private List<PostComment> postsComment;
+    private List<PostFile> postsFile;
 
     public int getTotalPage () {
         int totalPage = totalCount / pageSize;
@@ -57,6 +59,14 @@ public class PostPage {
 
     public void setPostsComment(List<PostComment> postsComment) {
         this.postsComment = postsComment;
+    }
+
+    public List<PostFile> getPostsFile() {
+        return postsFile;
+    }
+
+    public void setPostsFile(List<PostFile> postsFile) {
+        this.postsFile = postsFile;
     }
 
 }
