@@ -28,12 +28,14 @@ public class FileService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHddss");
             String dateStr = simpleDateFormat.format(date);
             //서버에 저장
-            File fileDir = new File("C:\\Upload"); 
+            // File fileDir = new File("C:\\Upload");   //window
+            File fileDir = new File("/Users/wook/@wook/Upload");    //mac 
             String fileName = file.getOriginalFilename();
             String fileCutName = fileName.substring(0, fileName.lastIndexOf("."));
             String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1);
             String saveFileName = fileCutName + "_" + dateStr;
-            String fullPath = "C:\\Upload\\" + saveFileName + "." + fileExt;
+            // String fullPath = "C:\\Upload\\" + saveFileName + "." + fileExt; //window
+            String fullPath = "/Users/wook/@wook/Upload/" + saveFileName + "." + fileExt;   //mac
             Files.createDirectories(fileDir.toPath());
             file.transferTo(new File(fullPath));
             //DB에 저장
@@ -57,8 +59,8 @@ public class FileService {
     }
     
     //파일 다운로드
-    public void downloadById(long id) {
-        //Todo 
+    public PostFile downloadById(long id) {
+        return sqlSession.selectOne("file.postFile", id);
     }
 
     //파일 삭제

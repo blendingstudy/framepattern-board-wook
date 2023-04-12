@@ -10,7 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletResponse;
 
 /*
     사용자 리퀘스트 처리
@@ -36,9 +43,39 @@ public class FileController {
 
     // 파일 다운로드
     @GetMapping("/download/file/{postId:\\d+}&{fileId:\\d+}")
-    public String download(@PathVariable long postId, @PathVariable long fileId) {
-        fileService.downloadById(fileId);
-        return "redirect:/read/{postId}";
+    public void download(HttpServletResponse response, @PathVariable long postId, @PathVariable long fileId) throws Exception {
+        PostFile postFile = fileService.downloadById(fileId);
+        String fileName = postFile.getFileOriginalName() + "." + postFile.getExtention();
+        String fileSaveName = postFile.getFileSaveName() + "." + postFile.getExtention();
+        String filePath = postFile.getFilePath().substring(0, postFile.getFilePath().lastIndexOf("/")) + "/";
+
+        File dFile = new File(filePath, fileSaveName);
+        int fSize = (int) dFile.length();
+        if (fSize > 0) {
+            String encodedFilename = "attachment; filename*=" + "UTF-8" + "''" + URLEncoder.encode(fileName, "UTF-8");
+            response.setContentType("application/octet-stream; charset=utf-8");
+            response.setHeader("Content-Disposition", encodedFilename);
+            response.setContentLengthLong(fSize);
+
+            BufferedInputStream in = null;
+            BufferedOutputStream out = null;
+
+            in = new BufferedInputStream(new FileInputStream(dFile));
+            out = new BufferedOutputStream(response.getOutputStream());
+
+            try {
+                byte[] buffer = new byte[4096];
+                int bytesRead = 0;
+                while ((bytesRead = in .read(buffer)) != -1) {
+                    out.write(buffer, 0, bytesRead);
+                }
+            } finally {
+                in.close();
+                out.close();
+            }
+        }
+        
+        // return "redirect:/read/{postId}";
     }
 
     // 파일 삭제

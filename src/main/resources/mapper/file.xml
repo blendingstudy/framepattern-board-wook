@@ -40,4 +40,17 @@
         ORDER BY created_at DESC 
     </select>
     
+    <select id="postFile" parameterType="long" resultType="PostFile">
+        SELECT id
+            , user_id
+            , file_path
+            , file_original_name
+            , file_save_name
+            , extention
+            , `size`
+            , created_at
+        FROM file
+        WHERE id = #{id}
+    </select>
+    
 </mapper>
